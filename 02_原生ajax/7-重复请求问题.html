@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>取消请求</title>
+</head>
+
+<body>
+    <button class="send">点击发送</button>
+    <script>
+        const send = document.querySelector('.send')
+        let xhr = null
+
+
+        // 声明一个标识变量
+        let isSending = false //表示是否正在发送AJAX请求
+
+        send.addEventListener('click', () => {
+            if (isSending === true) xhr.abort() //记得全等
+            xhr = new XMLHttpRequest()
+            isSending = true
+            xhr.open('POST', 'http://127.0.0.1:8000/delay')
+
+            // xhr.send('a=2&b=3')
+            xhr.send()
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    // 不判断状态码是因为请求很可能会失败
+                    isSending = false
+                    //这一次请求完成，修改标识变量
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
